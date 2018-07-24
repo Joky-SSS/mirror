@@ -1,5 +1,6 @@
 package com.jokysss.mirror;
 
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -8,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         pageList.add(new PageModel(R.layout.search_view,R.string.search_view));
+        pageList.add(new PageModel(R.layout.poly_to_poly, R.string.poly2poly));
+        pageList.add(new PageModel(R.layout.fancy, R.string.fancy));
+
         ViewPager pager = findViewById(R.id.vp_content);
         pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

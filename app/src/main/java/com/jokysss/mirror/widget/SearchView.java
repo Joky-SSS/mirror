@@ -33,11 +33,10 @@ public class SearchView extends View {
     public SearchView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
-        mValueAnimator.start();
     }
 
     public enum State {
-        NONE, START, SEARCH, END;
+        NONE, START, SEARCH, END
     }
 
     private void init() {
@@ -146,5 +145,17 @@ public class SearchView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mValueAnimator.start();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mValueAnimator.pause();
     }
 }
