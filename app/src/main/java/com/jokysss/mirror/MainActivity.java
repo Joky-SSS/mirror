@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         pageList.add(new PageModel(R.layout.search_view,R.string.search_view));
         pageList.add(new PageModel(R.layout.poly_to_poly, R.string.poly2poly));
         pageList.add(new PageModel(R.layout.fancy, R.string.fancy));
+        pageList.add(new PageModel(R.layout.location, R.string.location));
 
         ViewPager pager = findViewById(R.id.vp_content);
         pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

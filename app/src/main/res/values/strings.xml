@@ -6,5 +6,6 @@
     <string name="search_view">SearchView</string>
     <string name="poly2poly">Poly to Poly</string>
     <string name="fancy">Fancy</string>
+    <string name="location">Location</string>
 
 </resources>

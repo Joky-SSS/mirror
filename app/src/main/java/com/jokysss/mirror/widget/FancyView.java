@@ -46,7 +46,7 @@ public class FancyView extends View {
         mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.fancy);
         mImgH = mBitmap.getHeight();
         mImgW = mBitmap.getWidth();
-        camera.setLocation(0, 0, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, -6, getResources().getDisplayMetrics()));
+        camera.setLocation(0, 0, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, -16, getResources().getDisplayMetrics()));
         mRectPaint.setColor(Color.BLUE);
         mRectPaint.setStyle(Paint.Style.STROKE);
         animator = ValueAnimator.ofFloat(360);
