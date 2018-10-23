@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PageScrollActivity">
+
+    <com.jokysss.mirror.widget.PageScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_launcher_foreground">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#2ad2c2"
+            android:text="colorAccent"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f4be2a"
+            android:text="colorAccent"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00FF00"
+            android:text="colorAccent"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#53a3dc"
+            android:text="colorAccent"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:gravity="center" />
+    </com.jokysss.mirror.widget.PageScrollView>
+</LinearLayout>

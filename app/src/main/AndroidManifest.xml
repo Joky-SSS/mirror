@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScrollActivity"></activity>
+        <activity android:name=".ScrollActivity" />
+        <activity android:name=".PageScrollActivity"></activity>
     </application>
 
 </manifest>

@@ -12,5 +12,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         findViewById(R.id.bt_view).setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, MainActivity.class)));
         findViewById(R.id.bt_scroll).setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, ScrollActivity.class)));
+        findViewById(R.id.bt_page).setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, PageScrollActivity.class)));
     }
 }
