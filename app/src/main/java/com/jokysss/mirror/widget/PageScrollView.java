@@ -167,7 +167,7 @@ public class PageScrollView extends ViewGroup {
     public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
             scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-            invalidate();
+            postInvalidate();
         }
     }
 }
