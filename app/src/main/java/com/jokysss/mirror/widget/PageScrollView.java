@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
@@ -15,7 +16,10 @@ public class PageScrollView extends ViewGroup {
     int touchSlop = 0;
     int lastX;
     int maxScrollX;
-
+    int spliteScrollX;
+    VelocityTracker mTracker;
+    int minFlingVelocity;
+    int currentPos = 0;
     public PageScrollView(Context context) {
         this(context, null);
     }
@@ -32,6 +36,7 @@ public class PageScrollView extends ViewGroup {
     private void init(Context context) {
         mScroller = new Scroller(context);
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        minFlingVelocity = ViewConfiguration.get(context).getScaledMinimumFlingVelocity();
     }
 
     @Override
@@ -73,6 +78,7 @@ public class PageScrollView extends ViewGroup {
             View child = getChildAt(i);
             child.layout(w * i, 0, w * i + w, h);
         }
+        spliteScrollX = w;
         if (n > 1)
             maxScrollX = (n - 1) * w;
     }
@@ -86,27 +92,82 @@ public class PageScrollView extends ViewGroup {
                     mScroller.abortAnimation();
                 }
                 lastX = (int) event.getX();
+                if (mTracker == null)
+                    mTracker = VelocityTracker.obtain();
+                mTracker.addMovement(event);
                 break;
             case MotionEvent.ACTION_MOVE:
-                int dx = lastX - x;
-                //                int currentScrollX = getScrollX();
-                //                if (dx > 0) {
-                //                    if (currentScrollX - dx < 0) {
-                //                        dx = currentScrollX;
-                //                    }
-                //                } else {
-                //                    if (currentScrollX - dx > maxScrollX) {
-                //                        dx = currentScrollX - maxScrollX;
-                //                    }
-                //                }
-                scrollBy(dx, 0);
+                mTracker.addMovement(event);
+                int dx = x - lastX;
+                int currentScrollX = getScrollX();
+                if (dx > 0) {
+                    if (currentScrollX - dx < 0) {
+                        dx = currentScrollX;
+                    }
+                } else {
+                    if (currentScrollX - dx > maxScrollX) {
+                        dx = currentScrollX - maxScrollX;
+                    }
+                }
+                scrollBy(-dx, 0);
+                Log.e(TAG, "lastX -> " + lastX + " ,x -> " + x + " ,dx -> " + dx);
                 lastX = x;
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                Log.e("TAG", "getScrollX -> " + getScrollX());
+                mTracker.addMovement(event);
+                Log.e(TAG, "getScrollX -> " + getScrollX());
+                mTracker.computeCurrentVelocity(1000);
+                int velocityX = (int) mTracker.getXVelocity();
+                Log.e(TAG, "velocityX -> " + velocityX);
+                if (velocityX > minFlingVelocity && currentPos > 0) {
+                    moveToPrevious();
+                } else if (velocityX < -minFlingVelocity && currentPos < getChildCount() - 1) {
+                    moveToNext();
+                } else {
+                    moveToDestination();
+                }
+                if (mTracker != null) {
+                    mTracker.clear();
+                    mTracker.recycle();
+                    mTracker = null;
+                }
                 break;
         }
         return true;
+    }
+
+    private void moveToPrevious() {
+        moveToPostion(currentPos - 1);
+    }
+
+    private void moveToNext() {
+        moveToPostion(currentPos + 1);
+    }
+
+    private void moveToDestination() {
+        int pos = (int) ((getScrollX() + spliteScrollX / 2) / spliteScrollX);
+        moveToPostion(pos);
+    }
+
+    private void moveToPostion(int pos) {
+        if (pos < 0)
+            pos = 0;
+        if (pos >= getChildCount())
+            pos = getChildCount() - 1;
+        currentPos = pos;
+        int scrollX = getScrollX();
+        int dest = pos * spliteScrollX;
+        int dx = dest - scrollX;
+        mScroller.startScroll(scrollX, 0, dx, 0, Math.abs(dx));
+        invalidate();
+    }
+
+    @Override
+    public void computeScroll() {
+        if (mScroller.computeScrollOffset()) {
+            scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+            invalidate();
+        }
     }
 }
