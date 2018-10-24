@@ -160,7 +160,7 @@ public class PageScrollView extends ViewGroup {
         int dest = pos * spliteScrollX;
         int dx = dest - scrollX;
         mScroller.startScroll(scrollX, 0, dx, 0, Math.abs(dx));
-        invalidate();
+        postInvalidate();
     }
 
     @Override
