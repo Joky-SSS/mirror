@@ -34,6 +34,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Page Scroll" />
+
+            <Button
+                    android:id="@+id/bt_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SwipeMenuListView"/>
+
+            <Button
+                    android:id="@+id/bt_slide_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SlideMenu"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

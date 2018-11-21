@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jokysss.mirror.widget.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                           android:layout_width="match_parent"
+                                           android:layout_height="60dp">
+
+    <TextView
+            android:paddingLeft="16dp"
+            android:id="@+id/item_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="sss"
+            android:textSize="22sp"
+            android:gravity="center_vertical"/>
+    <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"/>
+    <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"/>
+</com.jokysss.mirror.widget.SwipeMenuLayout>
