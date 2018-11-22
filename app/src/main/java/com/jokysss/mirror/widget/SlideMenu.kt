@@ -69,12 +69,25 @@ class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defSt
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = measureWidth(widthMeasureSpec)
         val height = measureHeight(heightMeasureSpec)
-        measureChildren(width, height)
         setMeasuredDimension(width, height)
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+            if (i == 0) {
+                var menuWMeasure = MeasureSpec.makeMeasureSpec(slidingWidth, MeasureSpec.EXACTLY)
+                var menuHMeasure = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+                child.measure(menuWMeasure, menuHMeasure)
+            } else {
+                var menuWMeasure = MeasureSpec.makeMeasureSpec(screenWidth, MeasureSpec.EXACTLY)
+                var menuHMeasure = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+                child.measure(menuWMeasure, menuHMeasure)
+            }
+        }
+//        measureChildren(width, height)
     }
 
     private fun measureWidth(widthMeasureSpec: Int): Int {
         var mode = MeasureSpec.getMode(widthMeasureSpec)
+        var width = MeasureSpec.getSize(widthMeasureSpec)
         if (mode === MeasureSpec.AT_MOST) {
             throw IllegalArgumentException("layout_width can not be wrap_content")
         }
@@ -99,15 +112,19 @@ class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defSt
         var isOpen = flags and FLAG_IS_OPEN == FLAG_IS_OPEN
         for (i in 0 until n) {
             val child = getChildAt(i)
-            if (i == 0 && isOpen) {
-                child.layout(0, 0, slidingWidth, h)
-            } else {
-                child.layout(-slidingWidth, t, 0, h)
+            if (i == 0) {
+                if (isOpen) {
+                    child.layout(0, 0, slidingWidth, h)
+                } else {
+                    child.layout(-slidingWidth, t, 0, h)
+                }
             }
-            if (i == 1 && isOpen) {
-                child.layout(slidingWidth + separator.toInt(), 0, width, h)
-            } else {
-                child.layout(0, 0, screenWidth, h)
+            if (i == 1) {
+                if (isOpen) {
+                    child.layout(slidingWidth + separator.toInt(), 0, width, h)
+                } else {
+                    child.layout(0, 0, screenWidth, h)
+                }
             }
         }
     }
