@@ -17,7 +17,7 @@ class ListViewActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        for (i in 0..20) {
+        for (i in 0..50) {
             var item = mutableMapOf<String, String>()
             item["name"] = "ITEM-$i"
             item["sort"] = "$i"
