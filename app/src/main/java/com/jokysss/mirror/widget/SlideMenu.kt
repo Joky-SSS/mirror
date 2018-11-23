@@ -49,7 +49,7 @@ class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defSt
         if (separator > 0)
             flags = flags or FLAG_SEPARATOR
         a.recycle()
-        screenWidth = getScreenWidth(context)
+        screenWidth = getScreenWidth()
         setBackgroundColor(Color.alpha(255))
         paint = Paint(Paint.ANTI_ALIAS_FLAG)
         paint!!.strokeWidth = separator
@@ -88,7 +88,7 @@ class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defSt
     private fun measureWidth(widthMeasureSpec: Int): Int {
         var mode = MeasureSpec.getMode(widthMeasureSpec)
         var width = MeasureSpec.getSize(widthMeasureSpec)
-        if (mode === MeasureSpec.AT_MOST) {
+        if (mode == MeasureSpec.AT_MOST) {
             throw IllegalArgumentException("layout_width can not be wrap_content")
         }
         return (screenWidth + slidingWidth + separator).toInt()
@@ -97,11 +97,11 @@ class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defSt
     private fun measureHeight(heightMeasureSpec: Int): Int {
         var mode = MeasureSpec.getMode(heightMeasureSpec)
         var size = MeasureSpec.getSize(heightMeasureSpec)
-        if (mode === MeasureSpec.AT_MOST) {
+        if (mode == MeasureSpec.AT_MOST) {
             throw IllegalArgumentException("layout_height can not be wrap_content")
         }
         var height = 0
-        if (mode === MeasureSpec.EXACTLY)
+        if (mode == MeasureSpec.EXACTLY)
             height = size
         return height
     }
@@ -131,7 +131,7 @@ class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defSt
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (flags and FLAG_SEPARATOR === FLAG_SEPARATOR) {
+        if (flags and FLAG_SEPARATOR == FLAG_SEPARATOR) {
             var left = slidingWidth + separator / 2
             canvas.drawLine(left, 0.toFloat(), left, measuredHeight.toFloat(), paint)
         }
@@ -185,7 +185,7 @@ class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defSt
             MotionEvent.ACTION_UP -> {
                 var dx = x - firstX
                 if (dx.absoluteValue <= mTouchslop && x > slidingWidth) {
-                    if (flags and FLAG_IS_OPEN === FLAG_IS_OPEN) {
+                    if (flags and FLAG_IS_OPEN == FLAG_IS_OPEN) {
                         close()
                         return true
                     }
@@ -251,7 +251,7 @@ class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defSt
                 resources.displayMetrics).toInt()
     }
 
-    private fun getScreenWidth(context: Context): Int {
+    private fun getScreenWidth(): Int {
         val wm = getContext()
                 .getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val point = Point()
