@@ -6,8 +6,8 @@ import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.View
 import android.view.ViewConfiguration
-import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.Scroller
 import kotlin.math.absoluteValue
 
 class SwipeMenuListView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : ListView(context, attrs, defStyleAttr) {
@@ -23,6 +23,10 @@ class SwipeMenuListView @JvmOverloads constructor(context: Context, attrs: Attri
     private var isSlide = false
     private var verticalSlide = false
     private var minVelocity = 0
+    private var isRollback = false
+    private var scroller: Scroller = Scroller(context)
+    var removeListener: OnItemRemoveListener? = null
+
     init {
         init(context)
     }
@@ -40,11 +44,12 @@ class SwipeMenuListView @JvmOverloads constructor(context: Context, attrs: Attri
         obtainVelocityTracker(ev)
         when (action) {
             MotionEvent.ACTION_DOWN -> {
+                if (!scroller.isFinished) return super.dispatchTouchEvent(ev)
                 firstX = x
                 preX = x
                 firstY = y
                 postion = pointToPosition(x.toInt(), y.toInt())
-                if (postion != AdapterView.INVALID_POSITION) {
+                if (postion != INVALID_POSITION) {
                     var index = postion - firstVisiblePosition
                     flingView = getChildAt(index)
                 }
@@ -52,7 +57,9 @@ class SwipeMenuListView @JvmOverloads constructor(context: Context, attrs: Attri
             MotionEvent.ACTION_MOVE -> {
                 velocityTracker!!.computeCurrentVelocity(1000)
                 var velocity = velocityTracker!!.xVelocity
-                if (!verticalSlide && velocity.absoluteValue > snapVelocity && (x - firstX).absoluteValue > touchSlop && (y - firstY).absoluteValue < touchSlop) {
+                if (!verticalSlide && x > firstX
+                        && velocity.absoluteValue > snapVelocity
+                        && (x - firstX).absoluteValue > touchSlop && (y - firstY).absoluteValue < touchSlop) {
                     isSlide = true
                 }
                 if ((x - firstX).absoluteValue < touchSlop && (y - firstY).absoluteValue > touchSlop) {
@@ -78,8 +85,19 @@ class SwipeMenuListView @JvmOverloads constructor(context: Context, attrs: Attri
                 }
                 MotionEvent.ACTION_UP -> {
                     releaseVelocityTracker()
-                    postion = INVALID_POSITION
-                    flingView = null
+                    var scrollX = flingView?.scrollX ?: 0
+                    var listViewW = measuredWidth
+                    if (scrollX < 0 && scrollX.absoluteValue * 2 > listViewW) {
+                        var remain = listViewW + scrollX
+                        scroller.startScroll(scrollX, 0, -remain, 0)
+                        isRollback = false
+                    } else {
+                        scroller.startScroll(scrollX, 0, -scrollX, 0)
+                        isRollback = true
+                    }
+                    postInvalidate()
+//                    postion = INVALID_POSITION
+//                    flingView = null
                     isSlide = false
                     verticalSlide = false
                 }
@@ -87,6 +105,21 @@ class SwipeMenuListView @JvmOverloads constructor(context: Context, attrs: Attri
             return true
         }
         return super.onTouchEvent(ev)
+    }
+
+    override fun computeScroll() {
+        if (scroller.computeScrollOffset()) {
+            flingView?.scrollTo(scroller.currX, 0)
+            invalidate()
+            if (scroller.isFinished) {
+                if (!isRollback) {
+                    removeListener?.onItemRemoved(postion)
+                    flingView?.scrollTo(0, 0)
+                }
+                flingView = null
+                postion = INVALID_POSITION
+            }
+        }
     }
 
     private fun obtainVelocityTracker(motionEvent: MotionEvent) {
@@ -102,5 +135,9 @@ class SwipeMenuListView @JvmOverloads constructor(context: Context, attrs: Attri
             velocityTracker!!.recycle()
             velocityTracker = null
         }
+    }
+
+    interface OnItemRemoveListener {
+        fun onItemRemoved(position: Int)
     }
 }
