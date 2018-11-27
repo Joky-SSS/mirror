@@ -12,21 +12,17 @@ class SwipeMenuLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     var rightMenuWidth: Int = 0
     //滑动判定临界值（右侧菜单宽度的40%） 手指抬起时，超过了展开，没超过收起menu
     var limit: Int = 0
-    private var mContentView: View? = null//存储contentView(第一个View)
+    private var mContentView: View? = null
     val childSet = HashSet<View>()
     var contentWidth: Int = 0
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-//        isClickable = true//令自己可点击，从而获取触摸事件
         rightMenuWidth = 0//由于ViewHolder的复用机制，每次这里要手动恢复初始值
         for (i in 0 until childCount) {
             val childView = getChildAt(i)
-            //令每一个子View可点击，从而获取触摸事件
-//            childView.isClickable = true
             if (childView.visibility != View.GONE) {
                 if (i > 0) {//第一个布局是Left item，从第二个开始才是RightMenu
-
                     rightMenuWidth += childView.measuredWidth
                     childSet.add(childView)
                 } else {
