@@ -39,13 +39,19 @@
                     android:id="@+id/bt_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="SwipeMenuListView"/>
+                    android:text="Swipe_delete_ListView"/>
 
             <Button
                     android:id="@+id/bt_slide_menu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="SlideMenu"/>
+
+            <Button
+                    android:id="@+id/bt_swipe_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="swipe_menu_listview"/>
 
         </LinearLayout>
     </ScrollView>

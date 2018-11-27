@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.SimpleAdapter
-import com.jokysss.mirror.widget.SwipeMenuListView
+import com.jokysss.mirror.widget.SwipeDeleteListView
 import kotlinx.android.synthetic.main.activity_list_view.*
 
 class ListViewActivity : AppCompatActivity() {
@@ -17,7 +17,7 @@ class ListViewActivity : AppCompatActivity() {
         initData()
         adapter = SimpleAdapter(this, data, R.layout.simple_item, arrayOf("name", "sort"), intArrayOf(R.id.name, R.id.sort))
         listView.adapter = adapter
-        listView.removeListener = object : SwipeMenuListView.OnItemRemoveListener {
+        listView.removeListener = object : SwipeDeleteListView.OnItemRemoveListener {
             override fun onItemRemoved(position: Int) {
                 data.removeAt(position)
                 adapter.notifyDataSetChanged()

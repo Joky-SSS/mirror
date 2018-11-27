@@ -15,6 +15,7 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.bt_page).setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, PageScrollActivity.class)));
         findViewById(R.id.bt_list).setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, ListViewActivity.class)));
         findViewById(R.id.bt_slide_menu).setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, SlideMenuActivity.class)));
+        findViewById(R.id.bt_swipe_menu).setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, SwipeMenuListViewActivity.class)));
 
     }
 }

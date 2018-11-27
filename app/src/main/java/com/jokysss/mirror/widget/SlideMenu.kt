@@ -13,7 +13,7 @@ import com.jokysss.mirror.R
 import kotlin.math.absoluteValue
 
 
-class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : ViewGroup(context, attrs, defStyleAttr) {
+class SlideMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : ViewGroup(context, attrs, defStyleAttr) {
 
     private val TAG = "SlideMenu"
     private val DO_MOVING = 0x001
@@ -33,9 +33,6 @@ class SlideMenu constructor(context: Context, attrs: AttributeSet? = null, defSt
     private var minFlingVelocity = 0
     private var mTracker: VelocityTracker? = null
     private var mTouchslop = 0
-
-    constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
 
     init {
         init(context, attrs)

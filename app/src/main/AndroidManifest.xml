@@ -26,6 +26,8 @@
         <activity android:name=".ListViewActivity"/>
         <activity android:name=".SlideMenuActivity">
         </activity>
+        <activity android:name=".SwipeMenuListViewActivity">
+        </activity>
     </application>
 
 </manifest>
