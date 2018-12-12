@@ -53,6 +53,12 @@
                     android:layout_height="wrap_content"
                     android:text="swipe_menu_listview"/>
 
+            <Button
+                    android:id="@+id/bt_tab_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tab_icon"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

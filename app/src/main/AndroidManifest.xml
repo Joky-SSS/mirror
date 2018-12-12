@@ -28,6 +28,8 @@
         </activity>
         <activity android:name=".SwipeMenuListViewActivity">
         </activity>
+        <activity android:name=".TabIconActivity">
+        </activity>
     </application>
 
 </manifest>
