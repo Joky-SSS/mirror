@@ -16,36 +16,36 @@ class PathHoverView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     override fun onDraw(canvas: Canvas) {
-        var path = Path()
-        path.moveTo((width / 3 * 2).toFloat(), 0F)
-        path.quadTo((width / 3 * 2).toFloat(), height.toFloat(), (width / 3).toFloat(), height.toFloat())
-        var leftPath = Path(path)
-        leftPath.lineTo(0F, height.toFloat())
-        leftPath.lineTo(0F, 0F)
-        leftPath.close()
+        var leftPath = Path()
+//        leftPath.lineTo(100F,100F)
+//        leftPath.setLastPoint(0F,0F)
+        leftPath.addRect(0F, 0F, width.toFloat(), height.toFloat(), Path.Direction.CW)
+        var rightPath = Path(leftPath)
 
-        var rightPath = Path(path)
-        rightPath.lineTo(width.toFloat(), height.toFloat())
-        rightPath.lineTo(width.toFloat(), 0F)
-        rightPath.close()
+        var circlePath = Path()
+//        circlePath.setLastPoint(0F,0F)
+        circlePath.addCircle(0F, 0F, (width / 2).toFloat(), Path.Direction.CW)
+        leftPath.op(circlePath, Path.Op.INTERSECT)
+        rightPath.op(circlePath, Path.Op.DIFFERENCE)
 
         var paint = Paint()
+        paint.style = Paint.Style.STROKE
         paint.strokeWidth = 10F
-
         paint.color = Color.RED
+
 
         canvas.drawPath(leftPath, paint)
         paint.color = Color.GREEN
         canvas.drawPath(rightPath, paint)
 
-        canvas.save()
-        canvas.clipPath(leftPath)
-        canvas.drawBitmap(firstBitmap, 0F, 0F, null)
-        canvas.restore()
-        canvas.save()
-        canvas.clipPath(rightPath)
-        canvas.drawBitmap(secondBitmap, 0F, 0F, null)
-        canvas.restore()
+//        canvas.save()
+//        canvas.clipPath(leftPath)
+//        canvas.drawBitmap(firstBitmap, 0F, 0F, null)
+//        canvas.restore()
+//        canvas.save()
+//        canvas.clipPath(rightPath)
+//        canvas.drawBitmap(secondBitmap, 0F, 0F, null)
+//        canvas.restore()
 
     }
 }

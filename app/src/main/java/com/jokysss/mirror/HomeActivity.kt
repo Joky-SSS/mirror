@@ -17,5 +17,6 @@ class HomeActivity : AppCompatActivity() {
         bt_slide_menu.setOnClickListener { v -> startActivity(Intent(this@HomeActivity, SlideMenuActivity::class.java)) }
         bt_swipe_menu.setOnClickListener { v -> startActivity(Intent(this@HomeActivity, SwipeMenuListViewActivity::class.java)) }
         bt_tab_icon.setOnClickListener { v -> startActivity(Intent(this@HomeActivity, TabIconActivity::class.java)) }
+        bt_test.setOnClickListener { v -> startActivity(Intent(this@HomeActivity, TestActivity::class.java)) }
     }
 }
