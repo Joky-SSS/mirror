@@ -3,62 +3,58 @@ package com.jokysss.mirror.widget
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.view.View
-import com.jokysss.mirror.R
+import android.widget.LinearLayout
 import kotlin.math.max
 import kotlin.math.min
 
-class PathHoverView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
-    lateinit var firstBitmap: Bitmap
-    lateinit var secondBitmap: Bitmap
-    var maxRadius = 0
-    var progress = 0
+
+class PathHoverView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
+    private val STATE_OPEN = 0
+    private val STATE_OPENING = 1
+    private val STATE_CLOSING = 2
+    private val STATE_CLOSE = 3
+    private var currentState = 3
+    private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val circlePath = Path()
+    private val rectPath = Path()
+    private val mPath = Path()
+    private var maxRadius = 0
+
+
+    var progress = 50
         set(value) {
             var tempVal = min(max(value, 0), 100)
             field = tempVal
             postInvalidate()
         }
     init {
-        firstBitmap = BitmapFactory.decodeResource(resources, R.mipmap.ff)
-        secondBitmap = BitmapFactory.decodeResource(resources, R.mipmap.hh)
+        mPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         maxRadius = Math.sqrt(w * w + h * h + 0.0).toInt()
+        rectPath.reset()
+        rectPath.addRect(0F, 0F, w.toFloat(), h.toFloat(), Path.Direction.CW)
+    }
+
+    override fun dispatchDraw(canvas: Canvas) {
+        circlePath.reset()
+        mPath.reset()
+        if (currentState == STATE_OPEN || currentState == STATE_OPENING) {
+            circlePath.addCircle(0F, 0F, (maxRadius * progress / 100).toFloat(), Path.Direction.CW)
+            mPath.op(rectPath, circlePath, Path.Op.DIFFERENCE)
+        } else {
+            circlePath.addCircle(width.toFloat(), height.toFloat(), (maxRadius * progress / 100).toFloat(), Path.Direction.CW)
+            mPath.op(rectPath, circlePath, Path.Op.INTERSECT)
+        }
+        val save = canvas.saveLayer(0F, 0F, width.toFloat(), height.toFloat(), null, Canvas.ALL_SAVE_FLAG)
+        super.dispatchDraw(canvas)
+        canvas.drawPath(mPath, mPaint)
+        canvas.restoreToCount(save)
     }
 
     override fun onDraw(canvas: Canvas) {
-        var leftPath = Path()
-//        leftPath.lineTo(100F,100F)
-//        leftPath.setLastPoint(0F,0F)
-        leftPath.addRect(0F, 0F, width.toFloat(), height.toFloat(), Path.Direction.CW)
-        var rightPath = Path(leftPath)
-
-        var circlePath = Path()
-//        circlePath.setLastPoint(0F,0F)
-        circlePath.addCircle(0F, 0F, (maxRadius * progress / 100).toFloat(), Path.Direction.CW)
-        leftPath.op(circlePath, Path.Op.INTERSECT)
-        rightPath.op(circlePath, Path.Op.DIFFERENCE)
-
-        var paint = Paint()
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 10F
-        paint.color = Color.RED
-
-
-        canvas.drawPath(leftPath, paint)
-        paint.color = Color.GREEN
-        canvas.drawPath(rightPath, paint)
-
-//        canvas.save()
-//        canvas.clipPath(leftPath)
-//        canvas.drawBitmap(firstBitmap, 0F, 0F, null)
-//        canvas.restore()
-//        canvas.save()
-//        canvas.clipPath(rightPath)
-//        canvas.drawBitmap(secondBitmap, 0F, 0F, null)
-//        canvas.restore()
 
     }
 }
