@@ -3,17 +3,15 @@ package com.jokysss.mirror.widget
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.widget.LinearLayout
+import android.widget.FrameLayout
 import kotlin.math.max
 import kotlin.math.min
 
 
-class PathHoverView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
+class PathHoverView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
     private val STATE_OPEN = 0
-    private val STATE_OPENING = 1
-    private val STATE_CLOSING = 2
-    private val STATE_CLOSE = 3
-    private var currentState = 3
+    private val STATE_CLOSE = 1
+    private var currentState = 0
     private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val circlePath = Path()
     private val rectPath = Path()
@@ -21,10 +19,12 @@ class PathHoverView @JvmOverloads constructor(context: Context, attrs: Attribute
     private var maxRadius = 0
 
 
-    var progress = 50
+    var progress = 100
         set(value) {
-            var tempVal = min(max(value, 0), 100)
+            val tempVal = min(max(value, 0), 100)
             field = tempVal
+            if (progress == 100) currentState = STATE_OPEN
+            if (progress == 0) currentState = STATE_CLOSE
             postInvalidate()
         }
     init {
@@ -41,20 +41,16 @@ class PathHoverView @JvmOverloads constructor(context: Context, attrs: Attribute
     override fun dispatchDraw(canvas: Canvas) {
         circlePath.reset()
         mPath.reset()
-        if (currentState == STATE_OPEN || currentState == STATE_OPENING) {
+        if (currentState == STATE_OPEN) {
+            circlePath.addCircle(width.toFloat(), height.toFloat(), (maxRadius * (100 - progress) / 100).toFloat(), Path.Direction.CW)
+            mPath.op(rectPath, circlePath, Path.Op.INTERSECT)
+        } else {
             circlePath.addCircle(0F, 0F, (maxRadius * progress / 100).toFloat(), Path.Direction.CW)
             mPath.op(rectPath, circlePath, Path.Op.DIFFERENCE)
-        } else {
-            circlePath.addCircle(width.toFloat(), height.toFloat(), (maxRadius * progress / 100).toFloat(), Path.Direction.CW)
-            mPath.op(rectPath, circlePath, Path.Op.INTERSECT)
         }
-        val save = canvas.saveLayer(0F, 0F, width.toFloat(), height.toFloat(), null, Canvas.ALL_SAVE_FLAG)
+        val save = canvas.saveLayer(0F, 0F, width.toFloat(), height.toFloat(), null)
         super.dispatchDraw(canvas)
         canvas.drawPath(mPath, mPaint)
         canvas.restoreToCount(save)
-    }
-
-    override fun onDraw(canvas: Canvas) {
-
     }
 }
