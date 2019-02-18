@@ -84,7 +84,6 @@ class SlideMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     private fun measureWidth(widthMeasureSpec: Int): Int {
         var mode = MeasureSpec.getMode(widthMeasureSpec)
-        var width = MeasureSpec.getSize(widthMeasureSpec)
         if (mode == MeasureSpec.AT_MOST) {
             throw IllegalArgumentException("layout_width can not be wrap_content")
         }
@@ -129,7 +128,7 @@ class SlideMenu @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (flags and FLAG_SEPARATOR == FLAG_SEPARATOR) {
-            var left = slidingWidth + separator / 2
+            val left = slidingWidth + separator / 2
             canvas.drawLine(left, 0.toFloat(), left, measuredHeight.toFloat(), paint)
         }
     }

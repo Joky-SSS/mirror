@@ -14,7 +14,7 @@ class SwipeMenuAdapter : BaseAdapter() {
 
     init {
         for (i in 0..50) {
-            var item = mutableMapOf<String, String>()
+            val item = mutableMapOf<String, String>()
             item["name"] = "ITEM-$i"
             item["sort"] = "$i"
             data.add(item)
@@ -23,7 +23,7 @@ class SwipeMenuAdapter : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var layout: View? = convertView
-        var holder: Holder? = null
+        val holder: Holder?
         if (layout == null) {
             layout = LayoutInflater.from(parent!!.context).inflate(R.layout.simple_menu_item, parent, false)
             holder = Holder(position)
@@ -34,8 +34,8 @@ class SwipeMenuAdapter : BaseAdapter() {
         } else {
             holder = layout.tag as Holder?
         }
-        holder!!.name!!.text = data[position]["name"]
-        holder!!.sort!!.text = data[position]["sort"]
+        holder?.name!!.text = data[position]["name"]
+        holder.sort!!.text = data[position]["sort"]
         TipsView.create(parent!!.context as Activity?).attach(holder.num)
         return layout!!
     }

@@ -1,0 +1,6 @@
+
+project.task("showConfig"){
+    doLast{
+        println("$projects.name :showConfig")
+    }
+}
