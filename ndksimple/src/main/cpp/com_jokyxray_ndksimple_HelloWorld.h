@@ -15,6 +15,14 @@ extern "C" {
 JNIEXPORT jstring JNICALL Java_com_jokyxray_ndksimple_HelloWorld_sayHello
         (JNIEnv *, jobject, jstring);
 
+/*
+ * Class:     com_jokyxray_ndksimple_HelloWorld
+ * Method:    sumArr
+ * Signature: ([I)I
+ */
+JNIEXPORT jint JNICALL Java_com_jokyxray_ndksimple_HelloWorld_sumArr
+        (JNIEnv *, jobject, jintArray);
+
 #ifdef __cplusplus
 }
 #endif

@@ -10,6 +10,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         System.loadLibrary("helloworld")
-        txt.text = HelloWorld().sayHello("Joky")
+        System.loadLibrary("accessmethod")
+        var arr = intArrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+        var sum = HelloWorld().sumArr(arr)
+        txt.text = HelloWorld().sayHello("Joky $sum")
+        AccessMethod.callInstanceMethod()
+        AccessMethod.callStaticMethod()
     }
 }
