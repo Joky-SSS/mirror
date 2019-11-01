@@ -2,7 +2,12 @@ package com.jokysss.mirror.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -10,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import com.jokysss.mirror.R;
 
 import java.lang.ref.WeakReference;
@@ -152,14 +158,11 @@ public class TipsView extends FrameLayout {
 	}
 
 	public void attach(final View attachView, DragListener dragListener) {
-		attach(attachView, new ViewCreator<View>() {
-			@Override
-			public View invoke() {
-				Bitmap bm = view2Bitmap(attachView);
-				ImageView iv = new ImageView(getContext());
-				iv.setImageBitmap(bm);
-				return iv;
-			}
+		attach(attachView, () -> {
+			Bitmap bm = view2Bitmap(attachView);
+			ImageView iv = new ImageView(getContext());
+			iv.setImageBitmap(bm);
+			return iv;
 		}, dragListener);
 	}
 

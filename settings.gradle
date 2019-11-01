@@ -1,1 +1,1 @@
-include ':app', ':ndksimple'
+include ':app', ':ndksimple', ':algorithm'

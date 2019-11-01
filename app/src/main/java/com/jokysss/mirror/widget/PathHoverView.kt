@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.sqrt
 
 
 class PathHoverView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
@@ -33,7 +34,7 @@ class PathHoverView @JvmOverloads constructor(context: Context, attrs: Attribute
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        maxRadius = Math.sqrt(w * w + h * h + 0.0).toInt()
+        maxRadius = sqrt(w * w + h * h + 0.0).toInt()
         rectPath.reset()
         rectPath.addRect(0F, 0F, w.toFloat(), h.toFloat(), Path.Direction.CW)
     }

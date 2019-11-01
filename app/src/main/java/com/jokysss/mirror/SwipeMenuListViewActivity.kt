@@ -16,14 +16,10 @@ class SwipeMenuListViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_swipe_menu_list_view)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         listView.adapter = adapter
-        listView.onItemClickListener = object : AdapterView.OnItemClickListener {
-            override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(this@SwipeMenuListViewActivity, "OnItemClick position : $position", Toast.LENGTH_SHORT).show()
-            }
-        }
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ -> Toast.makeText(this@SwipeMenuListViewActivity, "OnItemClick position : $position", Toast.LENGTH_SHORT).show() }
         listView.onMenuClickListener = object : SwipeMenuListView.IOnMenuClickListener {
             override fun onMenuClick(menuView: View, position: Int) {
-                var id = if (menuView.id == R.id.look) "look" else "delete"
+                val id = if (menuView.id == R.id.look) "look" else "delete"
                 Toast.makeText(this@SwipeMenuListViewActivity, "onMenuClick viewId : $id , position : $position", Toast.LENGTH_SHORT).show()
             }
         }
