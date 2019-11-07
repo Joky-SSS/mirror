@@ -1,6 +1,6 @@
 package com.jokyxray
 
-import com.jokyxray.test.retrofit.TestService
+import com.jokyxray.generic.SubChild
 
 fun main() {
     /**
@@ -50,10 +50,16 @@ fun main() {
     /**
      * Retrofit test
      */
-    val retrofit = retrofit2.Retrofit.Builder()
-            .baseUrl("https://www.baidu.com")
-            .build()
-    val apiService = retrofit.create(TestService::class.java)
-    val call = apiService.testVoidHead()
-    call.execute()
+//    val retrofit = retrofit2.Retrofit.Builder()
+//            .baseUrl("https://www.baidu.com")
+//            .build()
+//    val apiService = retrofit.create(TestService::class.java)
+//    val call = apiService.testVoidHead()
+//    call.execute()
+
+    /**
+     * GenericType
+     */
+    val parent = SubChild<String, Int>()
+    parent.getGenericType()
 }
