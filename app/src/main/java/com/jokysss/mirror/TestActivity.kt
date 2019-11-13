@@ -3,9 +3,9 @@ package com.jokysss.mirror
 import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.jokysss.mirror.widget.PathHoverView
@@ -35,9 +35,9 @@ class TestActivity : AppCompatActivity() {
         }
     }
 
-    inner class ScrollAdapter : RecyclerView.Adapter<ScrollAdapter.ViewHolder>() {
+    inner class ScrollAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ScrollAdapter.ViewHolder>() {
 
-        lateinit var mScrollListener: RecyclerView.OnScrollListener
+        lateinit var mScrollListener: androidx.recyclerview.widget.RecyclerView.OnScrollListener
 
         init {
             initListener()
@@ -64,17 +64,17 @@ class TestActivity : AppCompatActivity() {
         }
 
         private fun initListener() {
-            mScrollListener = object : RecyclerView.OnScrollListener() {
+            mScrollListener = object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
                 var radius = 0F
                 var top = 0F
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val layoutManager = recyclerView.layoutManager as androidx.recyclerview.widget.LinearLayoutManager
                     val firstItemPosition = layoutManager.findFirstVisibleItemPosition()
                     val lastItemPosition = layoutManager.findLastVisibleItemPosition()
                     for (position in firstItemPosition..lastItemPosition) {
                         if (this@ScrollAdapter.getItemViewType(position) == 1) {
-                            val holder: RecyclerView.ViewHolder? = recyclerView.findViewHolderForAdapterPosition(position)
+                            val holder: androidx.recyclerview.widget.RecyclerView.ViewHolder? = recyclerView.findViewHolderForAdapterPosition(position)
                             if (holder is ViewHolder) {
                                 val rect = Rect()
                                 holder.hover?.getGlobalVisibleRect(rect)
@@ -85,7 +85,7 @@ class TestActivity : AppCompatActivity() {
                     }
                 }
 
-                private fun ensure(recyclerView: RecyclerView, holder: ViewHolder) {
+                private fun ensure(recyclerView: androidx.recyclerview.widget.RecyclerView, holder: ViewHolder) {
                     if (radius == 0F) {
                         val rRect = Rect()
                         recyclerView.getGlobalVisibleRect(rRect)
@@ -101,7 +101,7 @@ class TestActivity : AppCompatActivity() {
             }
         }
 
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
             var hover: PathHoverView? = itemView.findViewById(R.id.hoverView)
         }
     }

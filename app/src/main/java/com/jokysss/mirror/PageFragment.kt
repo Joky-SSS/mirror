@@ -2,8 +2,8 @@ package com.jokysss.mirror
 
 
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ import android.view.ViewStub
  * Use the [PageFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PageFragment : Fragment() {
+class PageFragment : androidx.fragment.app.Fragment() {
     private var mViewResId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
