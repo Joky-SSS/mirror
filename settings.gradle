@@ -1,1 +1,1 @@
-include  ':hotfiximpl' //  ':app',  ':algorithm', ':ndksimple',
+include  ':algorithm' //  ':app', ':hotfiximpl' , ':ndksimple',

@@ -1,6 +1,6 @@
 package com.jokyxray
 
-import com.jokyxray.generic.SubChild
+import com.jokyxray.algorithm.pack.DynamicProgram
 
 fun main() {
     /**
@@ -60,6 +60,13 @@ fun main() {
     /**
      * GenericType
      */
-    val parent = SubChild<String, Int>()
-    parent.getGenericType()
+//    val parent = SubChild<String, Int>()
+//    parent.getGenericType()
+
+    /**
+     *  Dynamic Program
+     */
+    val array = intArrayOf(5, 2, 6, 3, 1, 7)
+    val result = DynamicProgram.robber(array)
+    println("robber result is: $result")
 }
