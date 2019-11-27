@@ -28,9 +28,17 @@ object DynamicProgram {
      * 和最大的是[4,1,2,1]，为6。
      */
 
-    fun maSubArray(array: IntArray): Int {
+    fun maxSubArray(array: IntArray): Int {
         val length = array.size
-        if (array.isEmpty()) return 0
-
+        if (length == 0) return 0
+        val dp = IntArray(length) { 0 }
+        dp[0] = array[0]
+        var max = dp[0]
+        for (i in 1 until length) {
+            dp[i] = max(dp[i - 1] + array[i], array[i])
+            println("dp[$i] is ${dp[i]}")
+            if (dp[i] > max) max = dp[i]
+        }
+        return max
     }
 }

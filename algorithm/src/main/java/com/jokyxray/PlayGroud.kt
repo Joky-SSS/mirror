@@ -69,4 +69,8 @@ fun main() {
     val array = intArrayOf(5, 2, 6, 3, 1, 7)
     val result = DynamicProgram.robber(array)
     println("robber result is: $result")
+
+    val array2 = intArrayOf(-2, 1, -3, 4, -1, 2, 1, -5, 4)
+    val result2 = DynamicProgram.maxSubArray(array2)
+    println("maxSubArray result is: $result2")
 }
