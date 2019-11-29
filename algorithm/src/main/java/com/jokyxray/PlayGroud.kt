@@ -73,4 +73,14 @@ fun main() {
     val array2 = intArrayOf(-2, 1, -3, 4, -1, 2, 1, -5, 4)
     val result2 = DynamicProgram.maxSubArray(array2)
     println("maxSubArray result is: $result2")
+
+    var coins = intArrayOf(1, 2, 5)
+    var amount = 11
+    var result3 = DynamicProgram.coinChange(coins, amount)
+    println("coinChange result is: $result3")
+
+    coins = intArrayOf(2)
+    amount = 3
+    result3 = DynamicProgram.coinChange(coins, amount)
+    println("coinChange result is: $result3")
 }
